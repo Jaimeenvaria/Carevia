@@ -89,7 +89,7 @@ This is a comprehensive healthcare web application built using the **MERN stack 
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/RickyHarish/healthcare.git
+   git clone https://github.com/Jaimeenvaria/Carevia.git
    cd healthcare
    ```
 

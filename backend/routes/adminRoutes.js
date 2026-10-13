@@ -1,17 +1,33 @@
 const express = require('express');
 const router = express.Router();
-const { getDoctors, addDoctor, updateDoctor, deleteDoctor } = require('../controllers/adminController'); // Import your controller functions
+const authMiddleware = require('../middleware/authMiddleware');
+const roleMiddleware = require('../middleware/roleMiddleware');
+const { 
+    listUsers, updateUserStatus, 
+    getDoctors, addDoctor, updateDoctor, deleteDoctor, toggleDoctorActive,
+    listAppointments, updateAppointmentStatus,
+    getAuditLogs 
+} = require('../controllers/adminController');
 
-// Route to get all doctors
+// All admin routes require admin role
+router.use(authMiddleware, roleMiddleware('admin'));
+
+// Users
+router.get('/users', listUsers);
+router.put('/users/:id/status', updateUserStatus);
+
+// Doctors
 router.get('/doctors', getDoctors);
-
-// Route to add a new doctor
 router.post('/doctors', addDoctor);
-
-// Route to update a doctor's information
 router.put('/doctors/:id', updateDoctor);
-
-// Route to delete a doctor
 router.delete('/doctors/:id', deleteDoctor);
+router.put('/doctors/:id/toggle', toggleDoctorActive);
+
+// Appointments
+router.get('/appointments', listAppointments);
+router.put('/appointments/:id/status', updateAppointmentStatus);
+
+// Audit
+router.get('/audit-logs', getAuditLogs);
 
 module.exports = router;
